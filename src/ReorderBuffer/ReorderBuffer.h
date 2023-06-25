@@ -1,0 +1,27 @@
+#ifndef RISC_V_REORDERBUFFER_H
+#define RISC_V_REORDERBUFFER_H
+#include "../utils/utils.h"
+#include "../ReorderBuffer/ReorderBufferType.h"
+
+enum state{waiting,executing,ready};
+
+class ReorderBuffer{
+public:
+    MyQueue ReorderBuffer;
+    bool branch = false;
+    bool full = false;
+
+    //流入一条新的指令
+    void FlowIn(const instruct&);
+
+    bool TryCommit(int &pc); //若返回false,说明branch指令预判错误，清空CPU信息，引用传入的pc被更改。
+
+    void Clear();
+};
+
+
+
+
+
+
+#endif //RISC_V_REORDERBUFFER_H

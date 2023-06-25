@@ -1,0 +1,3 @@
+/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles/RISC_V.dir
+/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir
