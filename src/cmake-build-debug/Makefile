@@ -321,6 +321,30 @@ parser/parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/parser/parser.cpp.s
 .PHONY : parser/parser.cpp.s
 
+predictor/predictor.o: predictor/predictor.cpp.o
+.PHONY : predictor/predictor.o
+
+# target to build an object file
+predictor/predictor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o
+.PHONY : predictor/predictor.cpp.o
+
+predictor/predictor.i: predictor/predictor.cpp.i
+.PHONY : predictor/predictor.i
+
+# target to preprocess a source file
+predictor/predictor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.i
+.PHONY : predictor/predictor.cpp.i
+
+predictor/predictor.s: predictor/predictor.cpp.s
+.PHONY : predictor/predictor.s
+
+# target to generate assembly for a file
+predictor/predictor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.s
+.PHONY : predictor/predictor.cpp.s
+
 utils/utils.o: utils/utils.cpp.o
 .PHONY : utils/utils.o
 
@@ -378,6 +402,9 @@ help:
 	@echo "... parser/parser.o"
 	@echo "... parser/parser.i"
 	@echo "... parser/parser.s"
+	@echo "... predictor/predictor.o"
+	@echo "... predictor/predictor.i"
+	@echo "... predictor/predictor.s"
 	@echo "... utils/utils.o"
 	@echo "... utils/utils.i"
 	@echo "... utils/utils.s"

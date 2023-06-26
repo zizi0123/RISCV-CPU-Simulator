@@ -10,6 +10,7 @@ void Memory::Loadin() {
             std::cin >> std::hex >> address;
             if (start_address == 0) {
                 start_address = address;
+                pc = address;
                 num = 0;
             } else {
                 int new_num = address - start_address;
@@ -30,4 +31,12 @@ void Memory::Loadin() {
             num+=4;
         }
     }
+}
+
+int Memory::GetNewIns() {
+    int a=data[(pc++)-start_address];
+    for(int i = 1;i<=3;++i){
+        a=(a<<8)&data[(pc++)-start_address];
+    }
+    return a;
 }

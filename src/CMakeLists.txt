@@ -16,6 +16,7 @@ add_executable(RISC_V
         ReorderBuffer/ReorderBufferType.cpp
         ReservationStation/ReservationStation.cpp
         ReservationStation/ReservationStationType.cpp
+        predictor/predictor.cpp
         main/main.cpp
         utils/utils.cpp)
 

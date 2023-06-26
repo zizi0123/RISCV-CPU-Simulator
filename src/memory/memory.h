@@ -11,13 +11,13 @@ private:
 public:
     void Loadin();
 
-    int GetNewIns();//往下读一条指令,返回一个32位整数
+    int GetNewIns();//往下读一条指令,返回一个32位整数;pc+=4
 
     int Read(const int &add, const int &size);
 
     void Write(const int &add, const int &x);
 
-    int pc;
+    int pc; //program counter ：储存了下一条将要被读入的指令的地址
 };
 
 

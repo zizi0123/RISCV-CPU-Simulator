@@ -3,20 +3,20 @@
 #include "../utils/utils.h"
 #include "../ReorderBuffer/ReorderBufferType.h"
 
-enum state{waiting,executing,ready};
 
 class ReorderBuffer{
 public:
-    MyQueue ReorderBuffer;
+    MyQueue queue;
     bool branch = false;
-    bool full = false;
 
     //流入一条新的指令
     void FlowIn(const instruct&);
 
-    bool TryCommit(int &pc); //若返回false,说明branch指令预判错误，清空CPU信息，引用传入的pc被更改。
+    bool TryCommit(int &pc,bool &f); //若返回false,说明branch指令预判错误，清空CPU信息，引用传入的pc被更改。
 
     void Clear();
+
+    bool Full();
 };
 
 

@@ -138,6 +138,12 @@
 		<Unit filename="/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/parser/parser.h">
 			<Option target="RISC_V"/>
 		</Unit>
+		<Unit filename="/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.cpp">
+			<Option target="RISC_V"/>
+		</Unit>
+		<Unit filename="/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.h">
+			<Option target="RISC_V"/>
+		</Unit>
 		<Unit filename="/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/utils/utils.cpp">
 			<Option target="RISC_V"/>
 		</Unit>

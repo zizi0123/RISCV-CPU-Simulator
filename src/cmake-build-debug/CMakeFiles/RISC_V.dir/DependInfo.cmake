@@ -16,6 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/main/main.cpp" "CMakeFiles/RISC_V.dir/main/main.cpp.o" "gcc" "CMakeFiles/RISC_V.dir/main/main.cpp.o.d"
   "/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/memory/memory.cpp" "CMakeFiles/RISC_V.dir/memory/memory.cpp.o" "gcc" "CMakeFiles/RISC_V.dir/memory/memory.cpp.o.d"
   "/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/parser/parser.cpp" "CMakeFiles/RISC_V.dir/parser/parser.cpp.o" "gcc" "CMakeFiles/RISC_V.dir/parser/parser.cpp.o.d"
+  "/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.cpp" "CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o" "gcc" "CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o.d"
   "/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/utils/utils.cpp" "CMakeFiles/RISC_V.dir/utils/utils.cpp.o" "gcc" "CMakeFiles/RISC_V.dir/utils/utils.cpp.o.d"
   )
 

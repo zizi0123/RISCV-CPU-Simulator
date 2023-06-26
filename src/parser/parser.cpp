@@ -9,6 +9,10 @@ instruct Process(const int &a) { //输入一个32位整数
     const int bits_5 = 31;
     const int bits_3 = 7;
     int opcode = a & bits_7;
+    if(a == 0x0ff00513){
+        result.ins_type="return";
+        return result;
+    }
     if (opcode == LUI || opcode == AUIPC) {
         result.imm = ((a >> 12) << 12);
         result.rd = (a >> 7) & bits_5;
@@ -116,7 +120,7 @@ instruct Process(const int &a) { //输入一个32位整数
                 result.ins_type = "xori";
             } else if (opcode2 == 6) {
                 result.ins_type = "ori";
-            } else if (opcode2 == 7) {
+            } else {
                 result.ins_type = "andi";
             }
             tmp >>= 3;

@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/RISC_V.dir/memory/memory.cpp.o.d"
   "CMakeFiles/RISC_V.dir/parser/parser.cpp.o"
   "CMakeFiles/RISC_V.dir/parser/parser.cpp.o.d"
+  "CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o"
+  "CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o.d"
   "CMakeFiles/RISC_V.dir/utils/utils.cpp.o"
   "CMakeFiles/RISC_V.dir/utils/utils.cpp.o.d"
   "RISC_V"

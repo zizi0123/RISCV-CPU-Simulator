@@ -167,10 +167,24 @@ CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.s: cmake_for
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/ReservationStation/ReservationStationType.cpp -o CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.s
 
+CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o: CMakeFiles/RISC_V.dir/flags.make
+CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o: ../predictor/predictor.cpp
+CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o: CMakeFiles/RISC_V.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o -MF CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o.d -o CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o -c /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.cpp
+
+CMakeFiles/RISC_V.dir/predictor/predictor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/RISC_V.dir/predictor/predictor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.cpp > CMakeFiles/RISC_V.dir/predictor/predictor.cpp.i
+
+CMakeFiles/RISC_V.dir/predictor/predictor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/RISC_V.dir/predictor/predictor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/predictor/predictor.cpp -o CMakeFiles/RISC_V.dir/predictor/predictor.cpp.s
+
 CMakeFiles/RISC_V.dir/main/main.cpp.o: CMakeFiles/RISC_V.dir/flags.make
 CMakeFiles/RISC_V.dir/main/main.cpp.o: ../main/main.cpp
 CMakeFiles/RISC_V.dir/main/main.cpp.o: CMakeFiles/RISC_V.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RISC_V.dir/main/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/RISC_V.dir/main/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RISC_V.dir/main/main.cpp.o -MF CMakeFiles/RISC_V.dir/main/main.cpp.o.d -o CMakeFiles/RISC_V.dir/main/main.cpp.o -c /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/main/main.cpp
 
 CMakeFiles/RISC_V.dir/main/main.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/RISC_V.dir/main/main.cpp.s: cmake_force
 CMakeFiles/RISC_V.dir/utils/utils.cpp.o: CMakeFiles/RISC_V.dir/flags.make
 CMakeFiles/RISC_V.dir/utils/utils.cpp.o: ../utils/utils.cpp
 CMakeFiles/RISC_V.dir/utils/utils.cpp.o: CMakeFiles/RISC_V.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/RISC_V.dir/utils/utils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/RISC_V.dir/utils/utils.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RISC_V.dir/utils/utils.cpp.o -MF CMakeFiles/RISC_V.dir/utils/utils.cpp.o.d -o CMakeFiles/RISC_V.dir/utils/utils.cpp.o -c /mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/utils/utils.cpp
 
 CMakeFiles/RISC_V.dir/utils/utils.cpp.i: cmake_force
@@ -204,6 +218,7 @@ RISC_V_OBJECTS = \
 "CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBufferType.cpp.o" \
 "CMakeFiles/RISC_V.dir/ReservationStation/ReservationStation.cpp.o" \
 "CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.o" \
+"CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o" \
 "CMakeFiles/RISC_V.dir/main/main.cpp.o" \
 "CMakeFiles/RISC_V.dir/utils/utils.cpp.o"
 
@@ -217,11 +232,12 @@ RISC_V: CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBuffer.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBufferType.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/ReservationStation/ReservationStation.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.o
+RISC_V: CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/main/main.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/utils/utils.cpp.o
 RISC_V: CMakeFiles/RISC_V.dir/build.make
 RISC_V: CMakeFiles/RISC_V.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable RISC_V"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/HuaweiMoveData/Users/86180/Desktop/PPCA/RISC-V/src/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable RISC_V"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RISC_V.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
