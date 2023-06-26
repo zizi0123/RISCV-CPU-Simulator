@@ -1,20 +1,20 @@
 #include "parser.h"
 
-instruct Process(const int &a) { //输入一个32位整数
+instruct Process(const unsigned int&a) { //输入一个32位无符号整数
     instruct result;
-    const int bits_10 = 1023;
-    const int bits_8 = 255;
-    const int bits_7 = 127;
-    const int bits_6 = 63;
-    const int bits_5 = 31;
-    const int bits_3 = 7;
+    const unsigned int bits_10 = 1023;
+    const unsigned int bits_8 = 255;
+    const unsigned int bits_7 = 127;
+    const unsigned int bits_6 = 63;
+    const unsigned int bits_5 = 31;
+    const unsigned int bits_3 = 7;
     int opcode = a & bits_7;
     if(a == 0x0ff00513){
         result.ins_type="return";
         return result;
     }
     if (opcode == LUI || opcode == AUIPC) {
-        result.imm = ((a >> 12) << 12);
+        result.imm = int(((a >> 12) << 12));
         result.rd = (a >> 7) & bits_5;
         if (opcode == LUI) {
             result.ins_type = "lui";
@@ -22,16 +22,16 @@ instruct Process(const int &a) { //输入一个32位整数
             result.ins_type = "auipc";
         }
     } else if (opcode == JAL) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.rd = tmp & bits_5;
         result.ins_type = "jal";
         tmp >>= 5;
-        result.imm = ((tmp >> 9) & bits_10) << 1;
+        result.imm = int(((tmp >> 9) & bits_10) << 1);
         result.imm &= ((tmp >> 8) & 1) << 11;
         result.imm &= (tmp & bits_8) << 12;
         result.imm &= (tmp >> 19) << 20;
     } else if (opcode == JALR) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.rd = tmp & bits_5;
         result.ins_type = "jalr";
         tmp >>= 8;
@@ -39,7 +39,7 @@ instruct Process(const int &a) { //输入一个32位整数
         tmp >>= 5;
         result.imm = tmp;
     } else if (opcode == B) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         int imm1 = tmp & bits_5;
         result.imm = (imm1 >> 1) << 1;
         tmp >>= 5;
@@ -67,7 +67,7 @@ instruct Process(const int &a) { //输入一个32位整数
         tmp >>= 6;
         result.imm &= (tmp << 12);
     } else if (opcode == L) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -87,7 +87,7 @@ instruct Process(const int &a) { //输入一个32位整数
         tmp >>= 5;
         result.imm = tmp;
     } else if (opcode == S) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.imm = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -105,7 +105,7 @@ instruct Process(const int &a) { //输入一个32位整数
         tmp >>= 5;
         result.imm &= (tmp << 5);
     } else if (opcode == I) {
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -143,7 +143,7 @@ instruct Process(const int &a) { //输入一个32位整数
             result.imm = tmp & bits_5;
         }
     } else if (opcode == R){
-        int tmp = a >> 7;
+        unsigned int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;

@@ -33,8 +33,8 @@ void Memory::Loadin() {
     }
 }
 
-int Memory::GetNewIns() {
-    int a=data[(pc++)-start_address];
+unsigned int Memory::GetNewIns() {
+    unsigned int a=data[(pc++)-start_address];
     for(int i = 1;i<=3;++i){
         a=(a<<8)&data[(pc++)-start_address];
     }

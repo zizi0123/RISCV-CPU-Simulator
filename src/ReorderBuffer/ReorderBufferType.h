@@ -7,7 +7,7 @@ enum RoBstate{waiting,executing,ready};
 
 struct instruct{
     int imm=0;
-    int rd=0;
+    int rd=-1; //表示没有结果寄存器
     int rs1=0;
     int rs2=0;
     int offset=0;

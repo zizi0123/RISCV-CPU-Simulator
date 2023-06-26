@@ -6,8 +6,10 @@
 
 class ReorderBuffer{
 public:
-    MyQueue queue;
+    MyQueue<RoBEle,32> queue;
     bool branch = false;
+
+    int RearEntry() const;
 
     //流入一条新的指令
     void FlowIn(const instruct&);

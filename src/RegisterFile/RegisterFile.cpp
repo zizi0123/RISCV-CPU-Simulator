@@ -12,4 +12,4 @@ RegisterFile::RegisterFile() {
     regs[0]=RegisterElement(0);
 }
 
-RegisterElement::RegisterElement(const int &num, const bool &dep):ins_num(num),if_depend(dep) {}
+RegisterElement::RegisterElement(const int &num, const bool &dep): ins_num(num), depend(dep) {}

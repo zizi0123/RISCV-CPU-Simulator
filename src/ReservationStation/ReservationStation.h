@@ -6,14 +6,16 @@
 #include "../ReorderBuffer/ReorderBufferType.h"
 #include "../ReorderBuffer/ReorderBuffer.h"
 #include "../RegisterFile/RegisterFile.h"
+#include "../utils/utils.h"
 
 class ReservationStation {
+
 public:
-    //load,store,jump,cmp,shift,set,branch
-    ReservationEle all_type_RS[21];
+    MyQueue<ReservationEle,5> RS1; //只会访问寄存器，不会访问内存；
+    MyQueue<ReservationEle,5> RS2; //Load&Store,会访问内存；
 
     //将一条新的指令发射到对应的RS中，成功则更改RoB队尾元素状态为executing，失败则改为waiting
-    void TryTransmit(const instruct &new_ins, ReorderBuffer &RoB, const RegisterFile &RF);
+    void TryTransmit(const instruct &new_ins, ReorderBuffer &RoB, RegisterFile &RF);
 
     //遍历时间，把已经开始执行的倒计时减一,返回时间为0的指令的all_type_RS编号
     std::vector<int> TimeTraversal();

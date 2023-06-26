@@ -1,30 +1,47 @@
 #include "utils.h"
 
-MyQueue::MyQueue() : front(0), rear(0) {}
+template<class T,int a>
+MyQueue<T,a>::MyQueue() : front(0), rear(0) {}
 
-bool MyQueue::EnQueue(const RoBEle &x) {
+template<class T,int a>
+bool MyQueue<T,a>::EnQueue(const T &x) {
     if (this->Full()) return false;
     rear = (rear + 1) % MaxSize;
     queue[rear] = x; //循环队列头空尾不空
 }
 
-bool MyQueue::DeQueue() {
+template<class T,int a>
+bool MyQueue<T,a>::DeQueue() {
     if (this->Empty()) return false;
     front = (front + 1) % MaxSize;
 }
 
-bool MyQueue::Full() {
+template<class T,int a>
+bool MyQueue<T,a>::Full() {
     return (rear + 1) % MaxSize == front;
 }
 
-bool MyQueue::Empty() {
+template<class T,int a>
+bool MyQueue<T,a>::Empty() {
     return front == rear;
 }
-
-RoBEle &MyQueue::Front() {
+template<class T,int a>
+T &MyQueue<T,a>::Front() {
     return queue[front+1];
 }
 
-RoBEle &MyQueue::Back() {
+template<class T,int a>
+T &MyQueue<T,a>::Back() {
     return queue[rear];
 }
+
+template<class T, int a>
+int MyQueue<T, a>::size() {
+    int size = rear-front;
+    if(size>=0) return size;
+    return size+MaxSize;
+}
+
+template class MyQueue<RoBEle,32>;
+
+template class MyQueue<ReservationEle,5>;

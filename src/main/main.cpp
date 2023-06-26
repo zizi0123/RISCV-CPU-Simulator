@@ -23,7 +23,7 @@ int main() {
         } else if (!RoB.Full()) {
             instruct new_ins = Process(memory.GetNewIns());
             RoB.FlowIn(new_ins); //Flowin时先默认状态为waiting,如果transmit成功，则改为executing
-            if (new_ins.ins_type[0] == 'b') RoB.branch = true; //分支指令
+            if(new_ins.rd!=-1) RF.AddDep(new_ins.rd,RoB.RearEntry());
             RS.TryTransmit(new_ins, RoB,RF);
         }
 

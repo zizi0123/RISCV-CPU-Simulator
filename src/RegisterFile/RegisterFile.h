@@ -1,5 +1,5 @@
 struct RegisterElement{
-    bool if_depend= false;
+    int depend= -1;
     int ins_num;
 
     RegisterElement() = default;
@@ -17,7 +17,7 @@ public:
     void ClearDep(int reg_num);
 
     //添加依赖关系
-    void AddDep(int reg_num,int ins_num);
+    void AddDep(int reg_num,int entry_num);
 
     //branch指令预判错误
     void Clear();

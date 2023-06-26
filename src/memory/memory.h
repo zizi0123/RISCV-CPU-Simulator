@@ -11,9 +11,9 @@ private:
 public:
     void Loadin();
 
-    int GetNewIns();//往下读一条指令,返回一个32位整数;pc+=4
+    unsigned int GetNewIns();//往下读一条指令,返回一个32位无符号整数;pc+=4
 
-    int Read(const int &add, const int &size);
+    unsigned Read(const int &add, const int &size);
 
     void Write(const int &add, const int &x);
 
