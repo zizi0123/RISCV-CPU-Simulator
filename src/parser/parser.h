@@ -12,4 +12,4 @@ const unsigned short I = std::bitset<7>(0010011).to_ulong();
 const unsigned short R = std::bitset<7>(0110011).to_ulong();
 
 //将一个32位指令转化成解析后的结构体instruct
-instruct Process(const unsigned int&a);
+instruct Process(const int&a,const int &my_pc);

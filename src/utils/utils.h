@@ -28,6 +28,8 @@ public:
 
     int size();
 
+    void Clear();
+
 };
 
 #endif //RISC_V_UTILS_H

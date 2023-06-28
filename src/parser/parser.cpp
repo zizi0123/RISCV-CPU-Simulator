@@ -1,6 +1,6 @@
 #include "parser.h"
 
-instruct Process(const unsigned int&a) { //输入一个32位无符号整数
+instruct Process(const int &a, const int &my_pc) { //输入一个32位无符号整数
     instruct result;
     const unsigned int bits_10 = 1023;
     const unsigned int bits_8 = 255;
@@ -9,12 +9,13 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
     const unsigned int bits_5 = 31;
     const unsigned int bits_3 = 7;
     int opcode = a & bits_7;
-    if(a == 0x0ff00513){
-        result.ins_type="return";
+    result.pc = my_pc; //本条指令的地址
+    if (a == 0x0ff00513) {
+        result.ins_type = "return";
         return result;
     }
     if (opcode == LUI || opcode == AUIPC) {
-        result.imm = int(((a >> 12) << 12));
+        result.imm = (a >> 12) << 12;
         result.rd = (a >> 7) & bits_5;
         if (opcode == LUI) {
             result.ins_type = "lui";
@@ -22,16 +23,16 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
             result.ins_type = "auipc";
         }
     } else if (opcode == JAL) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         result.rd = tmp & bits_5;
         result.ins_type = "jal";
         tmp >>= 5;
         result.imm = int(((tmp >> 9) & bits_10) << 1);
-        result.imm &= ((tmp >> 8) & 1) << 11;
-        result.imm &= (tmp & bits_8) << 12;
-        result.imm &= (tmp >> 19) << 20;
+        result.imm |= (int) ((tmp >> 8) & 1) << 11;
+        result.imm |= (int) (tmp & bits_8) << 12;
+        result.imm |= ((tmp >> 20) << 20);
     } else if (opcode == JALR) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         result.rd = tmp & bits_5;
         result.ins_type = "jalr";
         tmp >>= 8;
@@ -39,7 +40,7 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
         tmp >>= 5;
         result.imm = tmp;
     } else if (opcode == B) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         int imm1 = tmp & bits_5;
         result.imm = (imm1 >> 1) << 1;
         tmp >>= 5;
@@ -62,12 +63,12 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
         tmp >>= 5;
         result.rs2 = tmp & bits_5;
         tmp >>= 5;
-        result.imm &= ((tmp & bits_6) << 5);
-        result.imm &= ((imm1 & 1) << 11);
+        result.imm |= ((tmp & bits_6) << 5);
+        result.imm |= ((imm1 & 1) << 11);
         tmp >>= 6;
-        result.imm &= (tmp << 12);
+        result.imm |= (tmp << 12);
     } else if (opcode == L) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -87,7 +88,7 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
         tmp >>= 5;
         result.imm = tmp;
     } else if (opcode == S) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         result.imm = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -103,9 +104,9 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
         tmp >>= 5;
         result.rs2 = tmp & bits_5;
         tmp >>= 5;
-        result.imm &= (tmp << 5);
+        result.imm |= (tmp << 5);
     } else if (opcode == I) {
-        unsigned int tmp = a >> 7;
+        int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
@@ -142,15 +143,15 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
             tmp >>= 5;
             result.imm = tmp & bits_5;
         }
-    } else if (opcode == R){
-        unsigned int tmp = a >> 7;
+    } else if (opcode == R) {
+        int tmp = a >> 7;
         result.rd = tmp & bits_5;
         tmp >>= 5;
         int opcode2 = tmp & bits_3;
         if (opcode2 == 0) {
-            if(tmp>>13 == 0) {
+            if (tmp >> 13 == 0) {
                 result.ins_type = "add";
-            }else{
+            } else {
                 result.ins_type = "sub";
             }
         } else if (opcode2 == 1) {
@@ -162,9 +163,9 @@ instruct Process(const unsigned int&a) { //输入一个32位无符号整数
         } else if (opcode2 == 4) {
             result.ins_type = "xor";
         } else if (opcode2 == 5) {
-            if(tmp>>13 == 0) {
+            if (tmp >> 13 == 0) {
                 result.ins_type = "srl";
-            }else{
+            } else {
                 result.ins_type = "sra";
             }
         } else if (opcode2 == 6) {

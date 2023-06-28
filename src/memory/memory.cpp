@@ -1,8 +1,7 @@
 #include "memory.h"
 #include "iostream"
-#include "bitset"
 
-void Memory::Loadin() {
+void Memory::Loadin() { //todo 验证正确性
     char a;
     while (std::cin >> a) {
         if (a == '@') {
@@ -23,20 +22,42 @@ void Memory::Loadin() {
             std::cin >> b;
             piece += a;
             piece += b;
-            data[num+3] = strtol(piece.c_str(), nullptr, 16);
+            data[num + 3] = (unsigned char) strtoul(piece.c_str(), nullptr, 16);
             for (int i = 1; i <= 3; ++i) {
-                std::cin >> piece;
-                data[num+3-i] = strtol(piece.c_str(), nullptr, 16);
+                std::cin >> std::hex >> data[num + 3 - i];
             }
-            num+=4;
+            num += 4;
         }
     }
+    pc = start_address;
 }
 
-unsigned int Memory::GetNewIns() {
-    unsigned int a=data[(pc++)-start_address];
-    for(int i = 1;i<=3;++i){
-        a=(a<<8)&data[(pc++)-start_address];
-    }
-    return a;
+int Memory::GetNewIns() {
+    int a = (int) (signed char) data[pc++] << 24;
+    int b = ((int) data[pc++]) << 16;
+    int c = ((int) data[pc++]) << 8;
+    int d = (int) data[pc++];
+    return a | b | c | d;
+}
+
+int Memory::UnsignedRead(const int &add, const int &size) const {
+    int pos = add - start_address;
+    if (size == 1) return (int) data[pos];
+    if (size == 2) return ((int) data[pos] << 8) | ((int) data[pos + 1]);
+    int a = (int)data[pos] << 24;
+    int b = ((int) data[pos + 1]) << 16;
+    int c = ((int) data[pos + 2]) << 8;
+    int d = (int) data[pos + 3];
+    return a | b | c | d;
+}
+
+int Memory::SignedRead(const int &add, const int &size) const {
+    int pos = add - start_address;
+    if (size == 1) return (int) (signed char) data[pos];
+    if (size == 2) return ((int) (signed char) data[pos] << 8) | ((int) data[pos + 1]);
+    int a = (int) (signed char) data[pos] << 24;
+    int b = ((int) data[pos + 1]) << 16;
+    int c = ((int) data[pos + 2]) << 8;
+    int d = (int) data[pos + 3];
+    return a | b | c | d;
 }

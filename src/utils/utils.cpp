@@ -42,6 +42,14 @@ int MyQueue<T, a>::size() {
     return size+MaxSize;
 }
 
+template<class T, int a>
+void MyQueue<T, a>::Clear() {
+    front = rear = 0;
+}
+
+
 template class MyQueue<RoBEle,32>;
 
 template class MyQueue<ReservationEle,5>;
+
+template class MyQueue<SLEle,32>;

@@ -6,33 +6,40 @@
 #include "../ReorderBuffer/ReorderBufferType.h"
 #include "../ReorderBuffer/ReorderBuffer.h"
 #include "../RegisterFile/RegisterFile.h"
+#include "../memory/memory.h"
 #include "../utils/utils.h"
 
 class ReservationStation {
 
 public:
-    MyQueue<ReservationEle,5> RS1; //只会访问寄存器，不会访问内存；
+    ReservationEle RS1[5]; //只会访问寄存器，不会访问内存；   RS1:time==-2:空 time==-1:已有元素，但还未开始执行
     MyQueue<ReservationEle,5> RS2; //Load&Store,会访问内存；
+    MyQueue<SLEle,32> store_buffer;
 
-    //将一条新的指令发射到对应的RS中，成功则更改RoB队尾元素状态为executing，失败则改为waiting
-    void TryTransmit(const instruct &new_ins, ReorderBuffer &RoB, RegisterFile &RF);
+    //将一条新的指令发射到对应的RS中，返回是否成功
+    bool TryTransmit(const instruct &new_ins,const int &,const RegisterFile&RF);
 
     //遍历时间，把已经开始执行的倒计时减一,返回时间为0的指令的all_type_RS编号
-    std::vector<int> TimeTraversal();
+    void TimeTraversal(std::vector<int> &);
 
     //对时间已为0的指令执行ready操作
-    void SetReady(const std::vector<int> &nums, ReorderBuffer &RoB);
+    void SetReady(const std::vector<int> &, ReorderBuffer &RoB);
 
     //若有Qj(Qk)=entry，则令Vj(Vk)=result，Qj(Qk)=0;
-    void CDB(const std::vector<int> &entries);
+    void CDB(const ReorderBuffer &RoB);
 
-    //若有指令qj==0&&qi==0,则set time，开始执行
-    void ExecuteTraversal();
+    //若有指令qj==0&&q1==0,则set time，开始执行
+    void SetExecute();
+
+    //处理store_buffer中的load和store指令
+    void ExecuteLSBuffer(ReorderBuffer &RoB,const Memory & memory);
 
     //branch指令预判错误，清空
     void Clear();
 
 
 };
+
+bool IsLS(const std::string &ins_type);
 
 #endif //RISC_V_RESERVATIONSTATION_H

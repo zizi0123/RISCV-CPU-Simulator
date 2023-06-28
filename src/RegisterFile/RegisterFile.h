@@ -1,6 +1,6 @@
 struct RegisterElement{
-    int depend= -1;
-    int ins_num;
+    int depend= -1; //-1表示无依赖
+    int value;
 
     RegisterElement() = default;
 
@@ -18,6 +18,7 @@ public:
 
     //添加依赖关系
     void AddDep(int reg_num,int entry_num);
+
 
     //branch指令预判错误
     void Clear();

@@ -12,4 +12,8 @@ RegisterFile::RegisterFile() {
     regs[0]=RegisterElement(0);
 }
 
-RegisterElement::RegisterElement(const int &num, const bool &dep): ins_num(num), depend(dep) {}
+void RegisterFile::Clear() {
+    for(auto i : regs) i.depend = -1;
+}
+
+RegisterElement::RegisterElement(const int &num, const bool &dep): value(num), depend(dep) {}

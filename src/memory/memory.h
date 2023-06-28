@@ -5,17 +5,22 @@
 
 class Memory {
 private:
-    int data[100000]; //指令及数据，数组的一个单元存一个字节
+    unsigned char data[100000]; //指令及数据，数组的一个单元存一个字节
     int num = 0; //总字节数
     int start_address = 0;
 public:
     void Loadin();
 
-    unsigned int GetNewIns();//往下读一条指令,返回一个32位无符号整数;pc+=4
+    int GetNewIns();//往下读一条指令,返回一个32位无符号整数;pc+=4
 
-    unsigned Read(const int &add, const int &size);
+    int UnsignedRead(const int &add, const int &size) const; //零扩展为32位
 
-    void Write(const int &add, const int &x);
+    int SignedRead(const int &add, const int &size) const; //符号扩展为32位
+
+
+
+
+    void Write(const int &add, const int &x,const int &size);
 
     int pc; //program counter ：储存了下一条将要被读入的指令的地址
 };
