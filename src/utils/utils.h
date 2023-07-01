@@ -6,11 +6,14 @@
 //实现一个可以用下标访问的queue
 template<class T,int a>
 class MyQueue {
-public:
-    const int MaxSize = a;
-    T queue[32];
+
+private:
     int front;
     int rear;
+public:
+    T queue[32];
+
+    const int MaxSize = a;
 
     MyQueue();
 
@@ -29,6 +32,10 @@ public:
     int size();
 
     void Clear();
+
+    int RearEntry() const;
+
+    int FrontEntry() const;
 
 };
 

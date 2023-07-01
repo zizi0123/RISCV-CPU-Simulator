@@ -17,8 +17,6 @@ public:
     int offset; //branch指令中pc的跳转距离
     int time; //倒计时
 
-    int RearEntry() const;
-
     //流入一条新的指令
     void FlowIn(const instruct&);
 
@@ -27,6 +25,8 @@ public:
     void Clear();
 
     bool Full();
+
+    void PrintCommit();
 };
 
 

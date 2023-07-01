@@ -22,11 +22,11 @@ void Memory::Loadin() { //todo 验证正确性
             std::cin >> b;
             piece += a;
             piece += b;
-            data[num + 3] = (unsigned char) strtoul(piece.c_str(), nullptr, 16);
+            data[num] = (unsigned char) strtoul(piece.c_str(), nullptr, 16);
             for (int i = 1; i <= 3; ++i) {
                 unsigned short x;
                 std::cin >> std::hex >> x;
-                data[num + 3 - i] = (unsigned char) x;
+                data[num + i] = (unsigned char) x;
             }
             num += 4;
         }
@@ -35,33 +35,23 @@ void Memory::Loadin() { //todo 验证正确性
 }
 
 int Memory::GetNewIns() {
-    int a = (int) (signed char) data[pc++] << 24;
-    int b = ((int) data[pc++]) << 16;
-    int c = ((int) data[pc++]) << 8;
-    int d = (int) data[pc++];
-    return a | b | c | d;
+    int x = pc;
+    pc+=4;
+    return UnsignedRead(x,4);
 }
 
-int Memory::UnsignedRead(const int &add, const int &size) const {
+int Memory::UnsignedRead(const int &add, const int &size)  {
     int pos = add - start_address;
     if (size == 1) return (int) data[pos];
-    if (size == 2) return ((int) data[pos] << 8) | ((int) data[pos + 1]);
-    int a = (int) data[pos] << 24;
-    int b = ((int) data[pos + 1]) << 16;
-    int c = ((int) data[pos + 2]) << 8;
-    int d = (int) data[pos + 3];
-    return a | b | c | d;
+    if (size == 2) return (int)(*(reinterpret_cast<unsigned short *>(data + pos))) ;
+    return (int)(*(reinterpret_cast<unsigned int *>(data + pos)));
 }
 
-int Memory::SignedRead(const int &add, const int &size) const {
+int Memory::SignedRead(const int &add, const int &size)  {
     int pos = add - start_address;
     if (size == 1) return (int) (signed char) data[pos];
-    if (size == 2) return ((int) (signed char) data[pos] << 8) | ((int) data[pos + 1]);
-    int a = (int) (signed char) data[pos] << 24;
-    int b = ((int) data[pos + 1]) << 16;
-    int c = ((int) data[pos + 2]) << 8;
-    int d = (int) data[pos + 3];
-    return a | b | c | d;
+    if (size == 2) return (int)(*(reinterpret_cast<short *>(data + pos))) ;
+    return (int)(*(reinterpret_cast<int *>(data + pos)));
 }
 
 void Memory::Write(const int &add, const int &x, const int &size) {
@@ -69,12 +59,8 @@ void Memory::Write(const int &add, const int &x, const int &size) {
     if (size == 1) {
         data[pos] = x;
     } else if (size == 2) {
-        data[pos] = (((unsigned int) x) >> 8) & 255;
-        data[pos + 1] = x & 255;
+        *(reinterpret_cast<u_int16_t*>(data+pos)) = x;
     } else {
-        data[pos] = (((unsigned int) x) >> 24) & 255;
-        data[pos + 1] = (((unsigned int) x) >> 16) & 255;
-        data[pos + 2] = (((unsigned int) x) >> 8) & 255;
-        data[pos + 3] = x & 255;
+        *(reinterpret_cast<u_int32_t*>(data+pos)) = x;
     }
 }

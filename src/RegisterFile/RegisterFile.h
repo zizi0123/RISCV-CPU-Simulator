@@ -27,9 +27,6 @@ public:
 
     RegisterFile();
 
-    //添加依赖关系
-    void AddDep(int reg_num,int entry_num);
-
     //branch指令预判错误,清除所有的依赖关系
     void Clear();
 };
