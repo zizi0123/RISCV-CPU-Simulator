@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "RISC_V::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-RISC_V-Debug-3044db79fb91c2acdd50.json",
-					"name" : "RISC_V",
+					"id" : "code::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-code-Debug-6bc6e4b56ed6d6f8fa4e.json",
+					"name" : "code",
 					"projectIndex" : 0
 				}
 			]

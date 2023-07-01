@@ -8,7 +8,7 @@ include_directories(src/RegisterFile)
 include_directories(src/ReorderBuffer)
 include_directories(src/ReservationStation)
 
-add_executable(RISC_V
+add_executable(code
         parser/parser.cpp
         memory/memory.cpp
         RegisterFile/RegisterFile.cpp

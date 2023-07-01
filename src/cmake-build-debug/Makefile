@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named RISC_V
+# Target rules for targets named code
 
 # Build rule for target.
-RISC_V: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RISC_V
-.PHONY : RISC_V
+code: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 code
+.PHONY : code
 
 # fast build rule for target.
-RISC_V/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/build
-.PHONY : RISC_V/fast
+code/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/build
+.PHONY : code/fast
 
 RegisterFile/RegisterFile.o: RegisterFile/RegisterFile.cpp.o
 .PHONY : RegisterFile/RegisterFile.o
 
 # target to build an object file
 RegisterFile/RegisterFile.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/RegisterFile/RegisterFile.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/RegisterFile/RegisterFile.cpp.o
 .PHONY : RegisterFile/RegisterFile.cpp.o
 
 RegisterFile/RegisterFile.i: RegisterFile/RegisterFile.cpp.i
@@ -142,7 +142,7 @@ RegisterFile/RegisterFile.i: RegisterFile/RegisterFile.cpp.i
 
 # target to preprocess a source file
 RegisterFile/RegisterFile.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/RegisterFile/RegisterFile.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/RegisterFile/RegisterFile.cpp.i
 .PHONY : RegisterFile/RegisterFile.cpp.i
 
 RegisterFile/RegisterFile.s: RegisterFile/RegisterFile.cpp.s
@@ -150,7 +150,7 @@ RegisterFile/RegisterFile.s: RegisterFile/RegisterFile.cpp.s
 
 # target to generate assembly for a file
 RegisterFile/RegisterFile.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/RegisterFile/RegisterFile.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/RegisterFile/RegisterFile.cpp.s
 .PHONY : RegisterFile/RegisterFile.cpp.s
 
 ReorderBuffer/ReorderBuffer.o: ReorderBuffer/ReorderBuffer.cpp.o
@@ -158,7 +158,7 @@ ReorderBuffer/ReorderBuffer.o: ReorderBuffer/ReorderBuffer.cpp.o
 
 # target to build an object file
 ReorderBuffer/ReorderBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBuffer.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBuffer.cpp.o
 .PHONY : ReorderBuffer/ReorderBuffer.cpp.o
 
 ReorderBuffer/ReorderBuffer.i: ReorderBuffer/ReorderBuffer.cpp.i
@@ -166,7 +166,7 @@ ReorderBuffer/ReorderBuffer.i: ReorderBuffer/ReorderBuffer.cpp.i
 
 # target to preprocess a source file
 ReorderBuffer/ReorderBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBuffer.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBuffer.cpp.i
 .PHONY : ReorderBuffer/ReorderBuffer.cpp.i
 
 ReorderBuffer/ReorderBuffer.s: ReorderBuffer/ReorderBuffer.cpp.s
@@ -174,7 +174,7 @@ ReorderBuffer/ReorderBuffer.s: ReorderBuffer/ReorderBuffer.cpp.s
 
 # target to generate assembly for a file
 ReorderBuffer/ReorderBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBuffer.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBuffer.cpp.s
 .PHONY : ReorderBuffer/ReorderBuffer.cpp.s
 
 ReorderBuffer/ReorderBufferType.o: ReorderBuffer/ReorderBufferType.cpp.o
@@ -182,7 +182,7 @@ ReorderBuffer/ReorderBufferType.o: ReorderBuffer/ReorderBufferType.cpp.o
 
 # target to build an object file
 ReorderBuffer/ReorderBufferType.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBufferType.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBufferType.cpp.o
 .PHONY : ReorderBuffer/ReorderBufferType.cpp.o
 
 ReorderBuffer/ReorderBufferType.i: ReorderBuffer/ReorderBufferType.cpp.i
@@ -190,7 +190,7 @@ ReorderBuffer/ReorderBufferType.i: ReorderBuffer/ReorderBufferType.cpp.i
 
 # target to preprocess a source file
 ReorderBuffer/ReorderBufferType.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBufferType.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBufferType.cpp.i
 .PHONY : ReorderBuffer/ReorderBufferType.cpp.i
 
 ReorderBuffer/ReorderBufferType.s: ReorderBuffer/ReorderBufferType.cpp.s
@@ -198,7 +198,7 @@ ReorderBuffer/ReorderBufferType.s: ReorderBuffer/ReorderBufferType.cpp.s
 
 # target to generate assembly for a file
 ReorderBuffer/ReorderBufferType.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReorderBuffer/ReorderBufferType.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReorderBuffer/ReorderBufferType.cpp.s
 .PHONY : ReorderBuffer/ReorderBufferType.cpp.s
 
 ReservationStation/ReservationStation.o: ReservationStation/ReservationStation.cpp.o
@@ -206,7 +206,7 @@ ReservationStation/ReservationStation.o: ReservationStation/ReservationStation.c
 
 # target to build an object file
 ReservationStation/ReservationStation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStation.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStation.cpp.o
 .PHONY : ReservationStation/ReservationStation.cpp.o
 
 ReservationStation/ReservationStation.i: ReservationStation/ReservationStation.cpp.i
@@ -214,7 +214,7 @@ ReservationStation/ReservationStation.i: ReservationStation/ReservationStation.c
 
 # target to preprocess a source file
 ReservationStation/ReservationStation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStation.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStation.cpp.i
 .PHONY : ReservationStation/ReservationStation.cpp.i
 
 ReservationStation/ReservationStation.s: ReservationStation/ReservationStation.cpp.s
@@ -222,7 +222,7 @@ ReservationStation/ReservationStation.s: ReservationStation/ReservationStation.c
 
 # target to generate assembly for a file
 ReservationStation/ReservationStation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStation.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStation.cpp.s
 .PHONY : ReservationStation/ReservationStation.cpp.s
 
 ReservationStation/ReservationStationType.o: ReservationStation/ReservationStationType.cpp.o
@@ -230,7 +230,7 @@ ReservationStation/ReservationStationType.o: ReservationStation/ReservationStati
 
 # target to build an object file
 ReservationStation/ReservationStationType.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStationType.cpp.o
 .PHONY : ReservationStation/ReservationStationType.cpp.o
 
 ReservationStation/ReservationStationType.i: ReservationStation/ReservationStationType.cpp.i
@@ -238,7 +238,7 @@ ReservationStation/ReservationStationType.i: ReservationStation/ReservationStati
 
 # target to preprocess a source file
 ReservationStation/ReservationStationType.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStationType.cpp.i
 .PHONY : ReservationStation/ReservationStationType.cpp.i
 
 ReservationStation/ReservationStationType.s: ReservationStation/ReservationStationType.cpp.s
@@ -246,7 +246,7 @@ ReservationStation/ReservationStationType.s: ReservationStation/ReservationStati
 
 # target to generate assembly for a file
 ReservationStation/ReservationStationType.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/ReservationStation/ReservationStationType.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/ReservationStation/ReservationStationType.cpp.s
 .PHONY : ReservationStation/ReservationStationType.cpp.s
 
 main/main.o: main/main.cpp.o
@@ -254,7 +254,7 @@ main/main.o: main/main.cpp.o
 
 # target to build an object file
 main/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/main/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/main/main.cpp.o
 .PHONY : main/main.cpp.o
 
 main/main.i: main/main.cpp.i
@@ -262,7 +262,7 @@ main/main.i: main/main.cpp.i
 
 # target to preprocess a source file
 main/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/main/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/main/main.cpp.i
 .PHONY : main/main.cpp.i
 
 main/main.s: main/main.cpp.s
@@ -270,7 +270,7 @@ main/main.s: main/main.cpp.s
 
 # target to generate assembly for a file
 main/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/main/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/main/main.cpp.s
 .PHONY : main/main.cpp.s
 
 memory/memory.o: memory/memory.cpp.o
@@ -278,7 +278,7 @@ memory/memory.o: memory/memory.cpp.o
 
 # target to build an object file
 memory/memory.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/memory/memory.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/memory/memory.cpp.o
 .PHONY : memory/memory.cpp.o
 
 memory/memory.i: memory/memory.cpp.i
@@ -286,7 +286,7 @@ memory/memory.i: memory/memory.cpp.i
 
 # target to preprocess a source file
 memory/memory.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/memory/memory.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/memory/memory.cpp.i
 .PHONY : memory/memory.cpp.i
 
 memory/memory.s: memory/memory.cpp.s
@@ -294,7 +294,7 @@ memory/memory.s: memory/memory.cpp.s
 
 # target to generate assembly for a file
 memory/memory.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/memory/memory.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/memory/memory.cpp.s
 .PHONY : memory/memory.cpp.s
 
 parser/parser.o: parser/parser.cpp.o
@@ -302,7 +302,7 @@ parser/parser.o: parser/parser.cpp.o
 
 # target to build an object file
 parser/parser.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/parser/parser.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/parser/parser.cpp.o
 .PHONY : parser/parser.cpp.o
 
 parser/parser.i: parser/parser.cpp.i
@@ -310,7 +310,7 @@ parser/parser.i: parser/parser.cpp.i
 
 # target to preprocess a source file
 parser/parser.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/parser/parser.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/parser/parser.cpp.i
 .PHONY : parser/parser.cpp.i
 
 parser/parser.s: parser/parser.cpp.s
@@ -318,7 +318,7 @@ parser/parser.s: parser/parser.cpp.s
 
 # target to generate assembly for a file
 parser/parser.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/parser/parser.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/parser/parser.cpp.s
 .PHONY : parser/parser.cpp.s
 
 predictor/predictor.o: predictor/predictor.cpp.o
@@ -326,7 +326,7 @@ predictor/predictor.o: predictor/predictor.cpp.o
 
 # target to build an object file
 predictor/predictor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/predictor/predictor.cpp.o
 .PHONY : predictor/predictor.cpp.o
 
 predictor/predictor.i: predictor/predictor.cpp.i
@@ -334,7 +334,7 @@ predictor/predictor.i: predictor/predictor.cpp.i
 
 # target to preprocess a source file
 predictor/predictor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/predictor/predictor.cpp.i
 .PHONY : predictor/predictor.cpp.i
 
 predictor/predictor.s: predictor/predictor.cpp.s
@@ -342,7 +342,7 @@ predictor/predictor.s: predictor/predictor.cpp.s
 
 # target to generate assembly for a file
 predictor/predictor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/predictor/predictor.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/predictor/predictor.cpp.s
 .PHONY : predictor/predictor.cpp.s
 
 utils/utils.o: utils/utils.cpp.o
@@ -350,7 +350,7 @@ utils/utils.o: utils/utils.cpp.o
 
 # target to build an object file
 utils/utils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/utils/utils.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/utils/utils.cpp.o
 .PHONY : utils/utils.cpp.o
 
 utils/utils.i: utils/utils.cpp.i
@@ -358,7 +358,7 @@ utils/utils.i: utils/utils.cpp.i
 
 # target to preprocess a source file
 utils/utils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/utils/utils.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/utils/utils.cpp.i
 .PHONY : utils/utils.cpp.i
 
 utils/utils.s: utils/utils.cpp.s
@@ -366,7 +366,7 @@ utils/utils.s: utils/utils.cpp.s
 
 # target to generate assembly for a file
 utils/utils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RISC_V.dir/build.make CMakeFiles/RISC_V.dir/utils/utils.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/utils/utils.cpp.s
 .PHONY : utils/utils.cpp.s
 
 # Help Target
@@ -377,7 +377,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... RISC_V"
+	@echo "... code"
 	@echo "... RegisterFile/RegisterFile.o"
 	@echo "... RegisterFile/RegisterFile.i"
 	@echo "... RegisterFile/RegisterFile.s"
