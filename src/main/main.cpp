@@ -6,7 +6,7 @@
 #include "../ReservationStation/ReservationStation.h"
 
 int main() {
-//    freopen("../../superloop.data", "r", stdin);
+//    freopen("../testcases/array_test1.data", "r", stdin);
 //    freopen("ans.out", "w", stdout);
     Memory memory;
     RegisterFile RF;
