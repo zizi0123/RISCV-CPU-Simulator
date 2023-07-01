@@ -29,10 +29,9 @@ public:
     void CDB(const ReorderBuffer &RoB);
 
     //若有指令qj==0&&q1==0,则set time，开始执行
-    void SetExecute();
+    void SetExecute(ReorderBuffer &RoB, const Memory &memory);
 
-    //处理store_buffer中的load和store指令
-    void ExecuteLSBuffer(ReorderBuffer &RoB,const Memory & memory);
+
 
     //branch指令预判错误，清空
     void Clear();

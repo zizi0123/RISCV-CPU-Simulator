@@ -1,5 +1,5 @@
 #include "ReorderBuffer.h"
-
+#include "iostream"
 bool ReorderBuffer::Full() {
     return queue.Full();
 }
@@ -8,7 +8,7 @@ void ReorderBuffer::FlowIn(const instruct &new_ins) {
     RoBEle x = RoBEle(new_ins);
     x.state = waiting;
     queue.EnQueue(x);
-    x.entry = RearEntry();
+    queue.Back().entry = queue.rear;
     if (new_ins.ins_type[0] == 'b') {
         branch = true; //分支指令
         offset = new_ins.imm;
@@ -22,65 +22,75 @@ int ReorderBuffer::RearEntry() const {
 }
 
 //若返回false,说明branch指令预判错误.
-bool ReorderBuffer::TryCommit(Memory &memory, RegisterFile &RF, Predictor &predictor) { //引用传入了memory的pc
+bool ReorderBuffer::TryCommit(Memory &memory, RegisterFile &RF, Predictor &predictor) {
     if (queue.Front().state != ready && queue.Front().state != committing) return true;
     std::string type = queue.Front().instruction.ins_type;
     if (queue.Front().state == ready) {
         if (type == "lui" || type == "auipc") {
-            RF.regs[queue.Front().instruction.rd].value = queue.Front().result1;
+            RF.SetValue(queue.Front().instruction.rd, queue.Front().result1);
             //如果此寄存器的依赖就是本条指令，则需要清除依赖标记
-            if (RF.regs[queue.Front().instruction.rd].depend == queue.front + 1)
-                RF.regs[queue.Front().instruction.rd].depend = -1;
+            if (RF.GetDep(queue.Front().instruction.rd) == queue.front + 1)
+                RF.SetDep(queue.Front().instruction.rd, -1);
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         } else if (type == "jal" || type == "jalr") {
-            RF.regs[queue.Front().instruction.rd].value = queue.Front().result1;
+            RF.SetValue(queue.Front().instruction.rd, queue.Front().result1);
             memory.pc = queue.Front().result2;
             jump = false; //jump指令已被commit
-            if (RF.regs[queue.Front().instruction.rd].depend == queue.front + 1)
-                RF.regs[queue.Front().instruction.rd].depend = -1;
+            if (RF.GetDep(queue.Front().instruction.rd) == queue.front + 1)
+                RF.SetDep(queue.Front().instruction.rd, -1);
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         } else if (type[0] == 'b') {
             bool result = (queue.Front().result1 == predictor.predict_result[queue.front + 1]);
             //预判错误！
             if (!result) {
-                memory.pc = queue.Front().result2;
+                if (queue.Front().result1) { //本应跳转
+                    memory.pc = queue.Front().result2;
+                } else { //本不应跳转
+                    memory.pc = queue.Front().instruction.pc + 4;
+                }
             }
             //修改对应的二位饱和计数器
-            std::bitset<2> history = predictor.BHT[queue.Front().instruction.pc&1023];
-            unsigned int num = ((queue.Front().instruction.pc&1023)<<2)+history.to_ulong(); //计数器编号
-            if(queue.Front().result1){ //跳转
-                if(predictor.PHT[num].to_ulong() != 3){
-                    predictor.PHT[num] = std::bitset<2>(predictor.PHT[num].to_ulong()+1);
+            std::bitset<2> history = predictor.BHT[queue.Front().instruction.pc & 1023];
+            unsigned int num = ((queue.Front().instruction.pc & 1023) << 2) + history.to_ulong(); //计数器编号
+            if (queue.Front().result1) { //跳转
+                if (predictor.PHT[num].to_ulong() != 3) {
+                    predictor.PHT[num] = std::bitset<2>(predictor.PHT[num].to_ulong() + 1);
                 }
-            }else{ //不跳转
-                if(predictor.PHT[num].to_ulong() != 0){
-                    predictor.PHT[num] = std::bitset<2>(predictor.PHT[num].to_ulong()-1);
+            } else { //不跳转
+                if (predictor.PHT[num].to_ulong() != 0) {
+                    predictor.PHT[num] = std::bitset<2>(predictor.PHT[num].to_ulong() - 1);
                 }
             }
             //在预测器中记录本次跳转的结果
-            predictor.BHT[queue.Front().instruction.pc&1023]<<=1;
-            if(!queue.Front().result1){
-                predictor.BHT[queue.Front().instruction.pc&1023].reset(0); //设为0
-            }else{
-                predictor.BHT[queue.Front().instruction.pc&1023].set(0); //设为1
+            predictor.BHT[queue.Front().instruction.pc & 1023] <<= 1;
+            if (!queue.Front().result1) {
+                predictor.BHT[queue.Front().instruction.pc & 1023].reset(0); //设为0
+            } else {
+                predictor.BHT[queue.Front().instruction.pc & 1023].set(0); //设为1
             }
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
             return result;
         } else if (type == "lb" || type == "lh" || type == "lw" || type == "lbu" || type == "lhu") {
-            RF.regs[queue.Front().instruction.rd].value = queue.Front().result1;
-            if (RF.regs[queue.Front().instruction.rd].depend == queue.front + 1)
-                RF.regs[queue.Front().instruction.rd].depend = -1;
+            RF.SetValue(queue.Front().instruction.rd, queue.Front().result1);
+            if (RF.GetDep(queue.Front().instruction.rd) == queue.front + 1)
+                RF.SetDep(queue.Front().instruction.rd, -1);
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         } else if (type == "sb" || type == "sh" || type == "sw") { //需要三个周期
             queue.Front().state = committing;
             time = 2;
         } else if (type == "return") {
             program_finish = true;
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         } else {
-            RF.regs[queue.Front().instruction.rd].value = queue.Front().result1;
-            if (RF.regs[queue.Front().instruction.rd].depend == queue.front + 1)
-                RF.regs[queue.Front().instruction.rd].depend = -1;
+            RF.SetValue(queue.Front().instruction.rd, queue.Front().result1);
+            if (RF.GetDep(queue.Front().instruction.rd) == queue.front + 1)
+                RF.SetDep(queue.Front().instruction.rd, -1);
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         }
     } else {
@@ -95,6 +105,7 @@ bool ReorderBuffer::TryCommit(Memory &memory, RegisterFile &RF, Predictor &predi
                 memory.Write(queue.Front().result2, queue.Front().result1, 4);
             }
             store_commit = true; //store指令已经commit;
+            std::cout<<"commit instruction pc:"<<std::hex<<queue.Front().instruction.pc<<' '<<queue.Front().instruction.ins_type<<std::endl;
             queue.DeQueue();
         }
     }

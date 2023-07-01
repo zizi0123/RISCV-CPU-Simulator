@@ -5,9 +5,9 @@
 
 class Memory {
 private:
-    unsigned char data[100000]; //指令及数据，数组的一个单元存一个字节
+    unsigned char data[2000000]; //指令及数据，数组的一个单元存一个字节
     int num = 0; //总字节数
-    int start_address = 0;
+    int start_address = -1;
 public:
     void Loadin();
 
@@ -16,9 +16,6 @@ public:
     int UnsignedRead(const int &add, const int &size) const; //零扩展为32位
 
     int SignedRead(const int &add, const int &size) const; //符号扩展为32位
-
-
-
 
     void Write(const int &add, const int &x,const int &size);
 

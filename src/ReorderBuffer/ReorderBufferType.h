@@ -7,10 +7,10 @@ enum RoBstate{waiting,executing,ready,committing};
 
 struct instruct{
     int imm=0;
-    unsigned int rd=-1; //表示没有结果寄存器
-    unsigned int rs1=0;
-    unsigned int rs2=0;
-    int offset=0;
+    int rd=-1; //表示没有结果寄存器
+    int rs1=0;
+    int rs2=0;
+//    int offset=0;
     int pc; //本指令的地址
     std::string ins_type;
 };

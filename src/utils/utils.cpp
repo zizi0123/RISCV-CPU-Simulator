@@ -8,12 +8,14 @@ bool MyQueue<T,a>::EnQueue(const T &x) {
     if (this->Full()) return false;
     rear = (rear + 1) % MaxSize;
     queue[rear] = x; //循环队列头空尾不空
+    return true;
 }
 
 template<class T,int a>
 bool MyQueue<T,a>::DeQueue() {
     if (this->Empty()) return false;
     front = (front + 1) % MaxSize;
+    return true;
 }
 
 template<class T,int a>
@@ -27,7 +29,7 @@ bool MyQueue<T,a>::Empty() {
 }
 template<class T,int a>
 T &MyQueue<T,a>::Front() {
-    return queue[front+1];
+    return queue[(front+1)%MaxSize];
 }
 
 template<class T,int a>

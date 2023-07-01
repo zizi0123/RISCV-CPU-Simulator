@@ -1,25 +1,37 @@
+#ifndef RISC_V_REGISTERFILE_H
+#define RISC_V_REGISTERFILE_H
+
 struct RegisterElement{
     int depend= -1; //-1表示无依赖
     int value;
 
     RegisterElement() = default;
 
-    explicit RegisterElement(const int &num,const bool& dep=false);
+    explicit RegisterElement(const int &num);
 };
 
 class RegisterFile{
+private:
+    RegisterElement regs_old[32];
+    RegisterElement regs_new[32];
 public:
-    RegisterElement regs[32];
+    void SetDep(const int&reg_num,const int &ins_num);
+
+    void SetValue(const int&reg_num,const int &value);
+
+    int GetDep(const int &reg_num) const;
+
+    int GetValue(const int&reg_num) const;
+
+    void Flush();
 
     RegisterFile();
-
-    //去除依赖关系
-    void ClearDep(int reg_num);
 
     //添加依赖关系
     void AddDep(int reg_num,int entry_num);
 
-
-    //branch指令预判错误
+    //branch指令预判错误,清除所有的依赖关系
     void Clear();
 };
+
+#endif

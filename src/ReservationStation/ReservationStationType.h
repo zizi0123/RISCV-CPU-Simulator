@@ -3,15 +3,15 @@
 #include "string"
 
 struct ReservationEle {
-    std::string type;
     int entry; //在RoB中的对应编号
+    std::string type;
+    int pc;
     int time = -1;
     int v1 = -1;
     int v2 = -1;
     int q1 = -1; //默认无依赖
     int q2 = -1; //默认无依赖
     int imm = 0;
-    int pc;
 
     ReservationEle();
 
@@ -19,7 +19,7 @@ struct ReservationEle {
 };
 
 struct SLEle{
-    bool commit = false;
+//    bool commit = false;
     int time = -1;
     int address;
     int value;

@@ -7,7 +7,7 @@ void Memory::Loadin() { //todo 验证正确性
         if (a == '@') {
             int address;
             std::cin >> std::hex >> address;
-            if (start_address == 0) {
+            if (start_address == -1) {
                 start_address = address;
                 pc = address;
                 num = 0;
@@ -24,7 +24,9 @@ void Memory::Loadin() { //todo 验证正确性
             piece += b;
             data[num + 3] = (unsigned char) strtoul(piece.c_str(), nullptr, 16);
             for (int i = 1; i <= 3; ++i) {
-                std::cin >> std::hex >> data[num + 3 - i];
+                unsigned short x;
+                std::cin >> std::hex >> x;
+                data[num + 3 - i] = (unsigned char) x;
             }
             num += 4;
         }
@@ -44,7 +46,7 @@ int Memory::UnsignedRead(const int &add, const int &size) const {
     int pos = add - start_address;
     if (size == 1) return (int) data[pos];
     if (size == 2) return ((int) data[pos] << 8) | ((int) data[pos + 1]);
-    int a = (int)data[pos] << 24;
+    int a = (int) data[pos] << 24;
     int b = ((int) data[pos + 1]) << 16;
     int c = ((int) data[pos + 2]) << 8;
     int d = (int) data[pos + 3];
@@ -60,4 +62,19 @@ int Memory::SignedRead(const int &add, const int &size) const {
     int c = ((int) data[pos + 2]) << 8;
     int d = (int) data[pos + 3];
     return a | b | c | d;
+}
+
+void Memory::Write(const int &add, const int &x, const int &size) {
+    int pos = add - start_address;
+    if (size == 1) {
+        data[pos] = x;
+    } else if (size == 2) {
+        data[pos] = (((unsigned int) x) >> 8) & 255;
+        data[pos + 1] = x & 255;
+    } else {
+        data[pos] = (((unsigned int) x) >> 24) & 255;
+        data[pos + 1] = (((unsigned int) x) >> 16) & 255;
+        data[pos + 2] = (((unsigned int) x) >> 8) & 255;
+        data[pos + 3] = x & 255;
+    }
 }
