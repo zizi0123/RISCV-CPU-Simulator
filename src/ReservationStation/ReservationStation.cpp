@@ -4,7 +4,7 @@
 //已保证，RS中必有空余的空间。
 // 1.去检查rs1、rs2是否有依赖，若无，计入Vk(Vj)，Qk(Qj)=0;否则，使Qk(Qj)=register中的编号；
 //如果RS堵塞，某条形如a = a + 1的指令发射失败，当下一次发射时，寄存器依赖已建立（依赖于本指令）。因此若寄存器依赖等于本指令编号，则视为无依赖。
-void ReservationStation::Transmit(const instruct &new_ins, const int &entry_num, const RegisterFile &RF) {
+void ReservationStation::Issue(const instruct &new_ins, const int &entry_num, const RegisterFile &RF) {
     if (IsLS(new_ins.ins_type)) { //指令为load或store，需要访存，必须顺序执行
         ReservationEle a(entry_num, new_ins.ins_type, new_ins.pc);
         a.imm = new_ins.imm;
@@ -62,95 +62,92 @@ void ReservationStation::Transmit(const instruct &new_ins, const int &entry_num,
     }
 }
 
-void ReservationStation::TimeTraversal(std::vector<int> &a1) {
-    for (int i = 0; i < 5; i++) {
-        if (RS1.alus[i].time > 0) {
-            --RS1.alus[i].time;
-        } else if (RS1.alus[i].time == 0) { //倒计时已经结束！
-            a1.push_back(i);
+void ReservationStation::TimeTraversal() {
+    for (auto & alu : RS1.alus) {
+        if (alu.time > 0) {
+            --alu.time;
         }
     }
-
     if (!load_store_buffer.Empty() && load_store_buffer.Front().time > 0) --load_store_buffer.Front().time;
-
 }
 
 //时间已为0的指令执行ready操作，nums1记录了这些指令的编号
 //将结果记入RoB中的result;
 //RoB中的status=ready
-void ReservationStation::SetReady(const std::vector<int> &nums1, ReorderBuffer &RoB) {
+void ReservationStation::SetReady(ReorderBuffer &RoB) {
     //RS1:不访存
-    for (auto i: nums1) {
-        int entry_num = RS1.alus[i].entry;
+    for (auto & alu : RS1.alus) {
+        if(alu.time != 0) continue;
+        int entry_num = alu.entry;
         RoB.queue.queue[entry_num].state = ready;
-        if (RS1.alus[i].type == "lui") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].imm; //rd
-        } else if (RS1.alus[i].type == "auipc") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].imm + RS1.alus[i].pc; //rd
-        } else if (RS1.alus[i].type == "jal") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].pc + 4; //rd
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "jalr") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].pc + 4; //rd
-            RoB.queue.queue[entry_num].result2 = (RS1.alus[i].imm + RS1.alus[i].v1) & (~1); //pc
-        } else if (RS1.alus[i].type == "beq") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 == RS1.alus[i].v2); //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "bne") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 != RS1.alus[i].v2); //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "blt") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 < RS1.alus[i].v2); //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "bge") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 >= RS1.alus[i].v2); //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "bltu") {
-            RoB.queue.queue[entry_num].result1 = (unsigned int) RS1.alus[i].v1 < (unsigned int) RS1.alus[i].v2; //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "bgeu") {
-            RoB.queue.queue[entry_num].result1 = (unsigned int) RS1.alus[i].v1 >= (unsigned int) RS1.alus[i].v2; //if_jump
-            RoB.queue.queue[entry_num].result2 = RS1.alus[i].pc + RS1.alus[i].imm; //pc
-        } else if (RS1.alus[i].type == "addi") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 + RS1.alus[i].imm; //rd
-        } else if (RS1.alus[i].type == "slti") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 < RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "sltiu") {
-            RoB.queue.queue[entry_num].result1 = (unsigned int) RS1.alus[i].v1 < (unsigned int) RS1.alus[i].imm; //rd
-        } else if (RS1.alus[i].type == "xori") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 ^ RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "ori") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 | RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "andi") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 & RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "slli") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 << RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "srli") {
-            RoB.queue.queue[entry_num].result1 = ((unsigned int) RS1.alus[i].v1) >> RS1.alus[i].imm; //rd
-        } else if (RS1.alus[i].type == "srai") {
-            RoB.queue.queue[entry_num].result1 = (RS1.alus[i].v1 >> RS1.alus[i].imm); //rd
-        } else if (RS1.alus[i].type == "add") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 + RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "sub") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 - RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "sll") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 << (RS1.alus[i].v2 & 31); //rd
-        } else if (RS1.alus[i].type == "slt") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 < RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "sltu") {
-            RoB.queue.queue[entry_num].result1 = (unsigned) RS1.alus[i].v1 < (unsigned) RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "xor") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 ^ RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "srl") {
-            RoB.queue.queue[entry_num].result1 = ((unsigned int) RS1.alus[i].v1) >> (RS1.alus[i].v2 & 31); //rd
-        } else if (RS1.alus[i].type == "sra") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 >> (RS1.alus[i].v2 & 31); //rd
-        } else if (RS1.alus[i].type == "or") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 | RS1.alus[i].v2; //rd
-        } else if (RS1.alus[i].type == "and") {
-            RoB.queue.queue[entry_num].result1 = RS1.alus[i].v1 & RS1.alus[i].v2; //rd
+        if (alu.type == "lui") {
+            RoB.queue.queue[entry_num].result1 = alu.imm; //rd
+        } else if (alu.type == "auipc") {
+            RoB.queue.queue[entry_num].result1 = alu.imm + alu.pc; //rd
+        } else if (alu.type == "jal") {
+            RoB.queue.queue[entry_num].result1 = alu.pc + 4; //rd
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "jalr") {
+            RoB.queue.queue[entry_num].result1 = alu.pc + 4; //rd
+            RoB.queue.queue[entry_num].result2 = (alu.imm + alu.v1) & (~1); //pc
+        } else if (alu.type == "beq") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 == alu.v2); //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "bne") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 != alu.v2); //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "blt") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 < alu.v2); //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "bge") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 >= alu.v2); //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "bltu") {
+            RoB.queue.queue[entry_num].result1 = (unsigned int) alu.v1 < (unsigned int) alu.v2; //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "bgeu") {
+            RoB.queue.queue[entry_num].result1 = (unsigned int) alu.v1 >= (unsigned int) alu.v2; //if_jump
+            RoB.queue.queue[entry_num].result2 = alu.pc + alu.imm; //pc
+        } else if (alu.type == "addi") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 + alu.imm; //rd
+        } else if (alu.type == "slti") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 < alu.imm); //rd
+        } else if (alu.type == "sltiu") {
+            RoB.queue.queue[entry_num].result1 = (unsigned int) alu.v1 < (unsigned int) alu.imm; //rd
+        } else if (alu.type == "xori") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 ^ alu.imm); //rd
+        } else if (alu.type == "ori") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 | alu.imm); //rd
+        } else if (alu.type == "andi") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 & alu.imm); //rd
+        } else if (alu.type == "slli") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 << alu.imm); //rd
+        } else if (alu.type == "srli") {
+            RoB.queue.queue[entry_num].result1 = ((unsigned int) alu.v1) >> alu.imm; //rd
+        } else if (alu.type == "srai") {
+            RoB.queue.queue[entry_num].result1 = (alu.v1 >> alu.imm); //rd
+        } else if (alu.type == "add") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 + alu.v2; //rd
+        } else if (alu.type == "sub") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 - alu.v2; //rd
+        } else if (alu.type == "sll") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 << (alu.v2 & 31); //rd
+        } else if (alu.type == "slt") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 < alu.v2; //rd
+        } else if (alu.type == "sltu") {
+            RoB.queue.queue[entry_num].result1 = (unsigned) alu.v1 < (unsigned) alu.v2; //rd
+        } else if (alu.type == "xor") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 ^ alu.v2; //rd
+        } else if (alu.type == "srl") {
+            RoB.queue.queue[entry_num].result1 = ((unsigned int) alu.v1) >> (alu.v2 & 31); //rd
+        } else if (alu.type == "sra") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 >> (alu.v2 & 31); //rd
+        } else if (alu.type == "or") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 | alu.v2; //rd
+        } else if (alu.type == "and") {
+            RoB.queue.queue[entry_num].result1 = alu.v1 & alu.v2; //rd
         }
-        RS1.alus[i].time = -2; //将此元素标记为空
+        alu.time = -2; //将此元素标记为空
     }
 
     //RS2:访存

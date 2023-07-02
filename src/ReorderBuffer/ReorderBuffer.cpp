@@ -21,6 +21,7 @@ void ReorderBuffer::FlowIn(const instruct &new_ins) {
 
 //若返回false,说明branch指令预判错误.
 bool ReorderBuffer::TryCommit(Memory &memory, RegisterFile &RF, Predictor &predictor) {
+    if (queue.Empty()) return true;
     if (queue.Front().state != ready && queue.Front().state != committing) return true;
     std::string type = queue.Front().instruction.ins_type;
     if (queue.Front().state == ready) {

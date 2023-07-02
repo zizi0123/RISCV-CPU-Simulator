@@ -24,13 +24,13 @@ public:
     MyQueue<SLEle,32> load_store_buffer;
 
     //将一条新的指令发射到对应的RS中，返回是否成功
-    void Transmit(const instruct &new_ins, const int &, const RegisterFile&RF);
+    void Issue(const instruct &new_ins, const int &, const RegisterFile&RF);
 
     //遍历时间，把已经开始执行的倒计时减一,返回时间为0的指令的all_type_RS编号
-    void TimeTraversal(std::vector<int> &);
+    void TimeTraversal();
 
     //对时间已为0的指令执行ready操作
-    void SetReady(const std::vector<int> &, ReorderBuffer &RoB);
+    void SetReady(ReorderBuffer &RoB);
 
     //若有Qj(Qk)=entry，则令Vj(Vk)=result，Qj(Qk)=0;
     void CDB(const ReorderBuffer &RoB);
