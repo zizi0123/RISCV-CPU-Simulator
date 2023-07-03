@@ -44,11 +44,14 @@ bool ReorderBuffer::TryCommit(Memory &memory, RegisterFile &RF, Predictor &predi
             bool result = (queue.Front().result1 == predictor.predict_result[queue.FrontEntry()]);
             //预判错误！
             if (!result) {
+                predictor.AddWrong();
                 if (queue.Front().result1) { //本应跳转
                     memory.pc = queue.Front().result2;
                 } else { //本不应跳转
                     memory.pc = queue.Front().instruction.pc + 4;
                 }
+            }else{
+                predictor.AddRight();
             }
             //修改对应的二位饱和计数器
             std::bitset<2> history = predictor.BHT[queue.Front().instruction.pc & 1023];

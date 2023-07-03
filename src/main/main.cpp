@@ -3,7 +3,7 @@
 
 
 int main() {
-//    freopen("../testcases/array_test1.data", "r", stdin);
+    freopen("../testcases/tak.data", "r", stdin);
 //    freopen("ans.out", "w", stdout);
     Memory memory;
     RegisterFile RF;
@@ -32,7 +32,8 @@ int main() {
         RF.Flush();
 
         if (RoB.program_finish) {
-            std::cout << (((unsigned int) RF.GetValue(10)) & 255);
+            std::cout << (((unsigned int) RF.GetValue(10)) & 255)<<'\n';
+            std::cout<<"branch instruction num: "<<predictor.total_num()<<' '<<"prediction accuracy: "<<predictor.PreAccuracy();
             return 0;
         }
     }
